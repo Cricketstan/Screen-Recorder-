@@ -1,5 +1,5 @@
 {
-  "name": "screen-recorder-all",
+  "name": "screen-recorder",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
