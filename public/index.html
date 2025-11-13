@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Web Screen Recorder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family:sans-serif; padding:20px;">
+  
+  <h2>Record Any Website</h2>
+
+  <input id="url" type="text" placeholder="Enter URL" 
+         style="width:100%; padding:10px;">
+
+  <button onclick="record()" style="margin-top:10px; padding:10px;">
+    Start Recording
+  </button>
+
+  <p id="status"></p>
+
+  <script>
+    async function record() {
+      const url = document.getElementById("url").value;
+      document.getElementById("status").innerText = "Recording...";
+
+      const res = await fetch("https://YOUR-RENDER-APP.onrender.com/record", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ url })
+      });
+
+      if (!res.ok) {
+        document.getElementById("status").innerText = "Error!";
+        return;
+      }
+
+      const blob = await res.blob();
+      const a = document.createElement("a");
+
+      a.href = URL.createObjectURL(blob);
+      a.download = "recording.mp4";
+      a.click();
+
+      document.getElementById("status").innerText = "Done!";
+    }
+  </script>
+
+</body>
+</html>
